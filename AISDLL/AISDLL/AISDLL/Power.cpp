@@ -1,0 +1,296 @@
+#include "stdafx.h"
+#include <cmath>
+#include "Power.h"
+#include "stdlib.h"
+#include "massage.h"
+
+
+UINT64 AIS_POWER[76] = {
+	0x000000000000d347,//-125dB
+	0x000000000000facb,
+	0x00000000000101dc,
+	0x000000000001697d,
+	0x000000000001d5ca,
+	0x00000000000244b6,
+	0x000000000002c683,
+	0x000000000003ae9a,
+	0x00000000000434b0,
+	0x000000000004cc99,
+	0x0000000000070286,
+	0x0000000000091ff0,
+	0x00000000000bde30,
+	0x00000000000dc9b6,
+	0x0000000000119427,
+	0x00000000001667b0,
+	0x00000000001d17f7,
+	0x0000000000226906,
+	0x00000000002a1b1d,
+	0x000000000035892f,
+	0x00000000004d8092,
+	0x00000000005a537d,
+	0x00000000006d55fa,
+	0x00000000008f3f4a,
+	0x0000000000b32db0,
+	0x0000000000df46ea,
+	0x00000000011c1a2d,
+	0x0000000001664f25,
+	0x0000000001c22189,
+	0x000000000237ecf5,
+	0x0000000002becec8,
+	0x00000000038d73e3,
+	0x0000000004778e44,
+	0x00000000059bb4e7,
+	0x00000000071b28b6,
+	0x0000000008eaca15,
+	0x000000000b8252d1,
+	0x000000000e1bac79,
+	0x000000001232a8b8,
+	0x00000000169a85d7,
+	0x000000001c850184,
+	0x0000000023cf91a2,
+	0x000000002cdee875,
+	0x0000000038b11115,
+	0x00000000470c95e6,
+	0x0000000058a03b98,
+	0x0000000072582c3f,
+	0x000000008fc0c221,
+	0x00000000b30d4556,
+	0x00000000e1ea7206,
+	0x000000011cc83483,
+	0x0000000169b382a3,
+	0x00000001c090098d,
+	0x00000002396dc05c,
+	0x00000002cf75f39d,
+	0x000000038c7abccd,
+	0x0000000470857b32,
+	0x00000005984eb73d,
+	0x0000000712c73608,
+	0x00000008e6b11355,
+	0x0000000b2f736804,
+	0x0000000dcfbbc351,
+	0x00000010DEFAECC5,
+	0x0000001464901EA1,
+	0x0000001867DA9329,
+	0x0000001CF039849D,
+	0x00000022050C2D3F,
+	0x00000027ADB1C751,
+	0x0000002DF1898D14,
+	0x00000034D7F2B8CC,
+	0x0000003C6BDEA41E,
+	0x00000044B5BEC5EA,
+	0x0000004DBE049512,
+	0x000000578D218874,
+	0x000000622B8716F2,
+	0x0000006DA1A6B76B,//-50dB
+};
+unsigned int ACARS_POWER[76] ={
+	0x000000000000002E,//-125dB
+	0x000000000000002F,
+	0x0000000000000036,
+	0x0000000000000044,
+	0x0000000000000057,
+	0x0000000000000072,
+	0x0000000000000092,
+	0x00000000000000B9,
+	0x00000000000000e7,
+	0x000000000000011a,
+	0x0000000000000137,
+	0x000000000000015d,
+	0x0000000000000192,
+	0x00000000000001B1,
+	0x00000000000001d0,
+	0x000000000000021c,
+	0x000000000000029a,
+	0x00000000000002d8,
+	0x0000000000000345,
+	0x00000000000003a3,
+	0x0000000000000423,
+	0x000000000000049e,
+	0x0000000000000521,
+	0x00000000000005e5,
+	0x000000000000068a,
+	0x0000000000000774,
+	0x0000000000000870,
+	0x000000000000093f,
+	0x0000000000000a86,
+	0x0000000000000be0,
+	0x0000000000000d6d,
+	0x0000000000000eeb,
+	0x00000000000010dd,
+	0x000000000000125d,
+	0x0000000000001540,
+	0x00000000000017c3,
+	0x0000000000001abc,
+	0x0000000000001df8,
+	0x00000000000021c1,
+	0x00000000000024ed,
+	0x000000000000294d,
+	0x0000000000002eaf,
+	0x00000000000034ad,
+	0x0000000000003b89,
+	0x0000000000004318,
+	0x0000000000004982,
+	0x000000000000538f,
+	0x0000000000005e2c,
+	0x0000000000006836,
+	0x00000000000075b0,
+	0x00000000000085b3,
+	0x0000000000009477,
+	0x000000000000a65e,
+	0x000000000000b78b,
+	0x000000000000d4f7,
+	0x000000000000e6a2,
+	0x0000000000010924,
+	0x0000000000012add,
+	0x00000000000148b0,
+	0x0000000000016745,
+	0x0000000000016d56,
+	0x0000000000019fd2,
+	0x0000000000020cbb,
+	0x000000000002465d,
+	0x0000000000029042,
+	0x000000000002d633,
+	0x00000000000327f9,
+	0x00000000000377c2,
+	0x0000000000037920,
+	0x000000000003b4c3,
+	0x000000000003a1a9,
+	0x0000000000039c80,
+	0x0000000000040AEA,
+	0x0000000000047E8E,
+	0x000000000004F76D,
+	0x0000000000057586,//-50dB
+
+};
+unsigned int ADS_POWER[14] ={
+	0x00000240,		//-104dBm
+	0x00000453,		//-100dBm
+	0x00000bbc,		//-95dBm
+	0x00002800,		//-90dBm
+	0x00008300,		//-85dBm
+	0x0001A100,		//-80dBm
+	0x00052A00,		//-75dBm
+	0x00106864,		//-70dBm
+	0x0033dc5d,		//-65dBm
+	0x00A2B000,		//-60dBm
+	0x01FAE000,		//-55dBm
+	0x05d40000,		//-50dBm
+	0x08420000,		//-45dBm
+	0x08AA0000		//-40dBm
+};
+float Calc_Ais_Power(UINT64 num)
+{
+	UINT64 Pbase = 0;
+	UINT64 Poffset = 0;
+	float Ais_Power = 0;
+	if(num < AIS_POWER[0])
+	{
+		Ais_Power = 125 + (1/AIS_POWER[0])*num;
+	}
+	else if(num > AIS_POWER[75])
+	{
+		Ais_Power = 50 - (1/(AIS_POWER[75] - AIS_POWER[74]))*(num-AIS_POWER[75]);
+	}
+	else
+	{
+		for(int i = 0;i<76;i++)
+		{
+			if(num < AIS_POWER[i])
+			{
+				Pbase = 126 - i;
+				UINT64 dev = (AIS_POWER[i] - AIS_POWER[i - 1]);
+				//for(int j = 1;j<6;j++)
+				//{
+				//	if(num < (AIS_POWER[i-1]+ dev*j))
+				//	{
+				//		Poffset = j;
+				Ais_Power = (float)Pbase + (float)(num - AIS_POWER[i - 1]) / dev;
+				//		return -Ais_Power;
+				//	}
+				//}				
+				return -Ais_Power;
+			}
+		}
+	}
+	return - Ais_Power;
+}
+float Calc_Acars_Power(UINT64 num)
+{
+	UINT64 Pbase = 0;
+	UINT64 Poffset = 0;
+	float Acars_Power = 0;
+	if(num < ACARS_POWER[0])
+	{
+		Acars_Power = 125 + (1/ACARS_POWER[0])*num;
+	}
+	else if(num > ACARS_POWER[75])
+	{
+		Acars_Power = 50 - (1/(ACARS_POWER[75] - ACARS_POWER[74]))*(num-ACARS_POWER[75]);
+	}
+	else
+	{
+		for(int i = 0;i<76;i++)
+		{
+			if(num < ACARS_POWER[i])
+			{
+				Pbase = 126 - i;
+				UINT64 dev = (ACARS_POWER[i] - ACARS_POWER[i - 1]) ;
+				//for(int j = 1;j<6;j++)
+				//{
+				//	if(num < (ACARS_POWER[i-1]+ dev*j))
+				//	{
+				//		Poffset = j;
+				Acars_Power = (float)Pbase + (float)(num - ACARS_POWER[i - 1]) / dev;
+				//		return - Acars_Power;
+				//	}
+				//}
+				return -Acars_Power;
+			}
+
+		}
+	}
+	return - Acars_Power;
+}
+unsigned short Calc_Ads_Power(unsigned int num)
+{
+	unsigned short Pbase = 0;
+	unsigned short Poffset = 0;
+	unsigned short Ads_Power = 0;
+	if(num < ADS_POWER[0])
+	{
+		Ads_Power = 104 + (10/ADS_POWER[0])*num;
+	}
+	else if(num > ADS_POWER[13])
+	{
+		Ads_Power = 40 - (10/(ADS_POWER[13] - ADS_POWER[12]))*(num-ADS_POWER[13]);
+	}
+	else
+	{
+		Ads_Power = 135-(int)(10*log10(double(num)));
+		/*for(int i = 1;i<13;i++)
+		{*/
+			//if(num < ADS_POWER[i])
+			//{
+			//	Pbase = 100 - 5*(i-1);
+			//	unsigned int dev = (ADS_POWER[i] - ADS_POWER[i-1])/5;
+			//	for(int j = 1;j<6;j++)
+			//	{
+			//		if(num < (ADS_POWER[i-1]+ dev*j))
+			//		{
+			//			Poffset = j;
+			//			Ads_Power = Pbase - Poffset;
+			//			//return Ads_Power;
+			//		}
+			//	}
+
+			//}
+		/*else
+		{
+		Ads_Power = Pbase - Poffset;
+		}*/
+		//}
+	}
+	return -Ads_Power;
+}
+
+
